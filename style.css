@@ -1,0 +1,230 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/*header {
+    background-color: #f8f9fa;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+/* Style pour le conteneur de la barre de navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #7682a0;  /* Couleur de fond claire pour la navigation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Ombre subtile */
+    font-family: 'Arial', sans-serif;
+}
+
+/* Style pour le titre de la boutique */
+nav h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Style pour l'icône bébé */
+nav h1 span {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #ffb6c1; /* Couleur rose pour le rond */
+    color: #1e90ff; /* Couleur bleue pour l'icône */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+}
+
+nav h1 span i {
+    font-size: 20px; /* Taille de l'icône bébé */
+}
+
+/* Style pour le panier */
+#cart-icon {
+    position: relative;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Positionnement et style du nombre d'articles dans le panier */
+#cart-icon #cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #ff6347; /* Rouge pour bien voir le nombre d'articles */
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.cart {
+    position: relative;
+    cursor: pointer;
+}
+
+.cart img {
+    width: 40px;
+    height: 40px;
+}
+
+#cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+main {
+    padding: 20px;
+}
+
+.produits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.produit {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+}
+img {
+    max-width: 100%; /* L'image ne dépassera jamais la largeur de son conteneur */
+    height: auto;    /* Maintient le ratio d'aspect de l'image */
+    display: block;  /* Retire les espaces blancs autour des images */
+    margin: 20px 0;  /* Ajoute une marge verticale de 20px */
+}
+
+/* modal du panier */
+#panier-modal {
+    position: fixed;
+    top: 50px; /* Position à partir du haut */
+    right: 20px; /* Position à partir de la droite */
+    width: 300px; /* Largeur du panier */
+    max-height: 400px; /* Hauteur maximale du panier */
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Pour s'assurer qu'il est au-dessus d'autres éléments */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+
+
+#panier-items {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+button {
+    background-color:#ff6347;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+/* Conteneur pour le formulaire de paiement */
+.checkout-container {
+    max-width: 500px; /* Largeur maximale du formulaire */
+    margin: 40px auto; /* Centre le formulaire horizontalement */
+    padding: 30px; /* Espacement intérieur */
+    background-color:  rgba(0, 0, 0, 0.7); /* Couleur de fond du formulaire */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombre légère */
+}
+
+/* Titre du formulaire */
+.checkout-container h2 {
+    text-align: center; /* Centre le texte */
+    margin-bottom: 20px; /* Marge en bas du titre */
+    color:white; /* Couleur du texte */
+}
+
+/* Styles pour chaque groupe de formulaire */
+.form-group {
+    margin-bottom: 20px; /* Marge en bas de chaque groupe */
+}
+
+/* Styles pour les labels */
+.form-group label {
+    display: block; /* Affiche le label comme un bloc */
+    margin-bottom: 5px; /* Marge en bas du label */
+    font-weight: bold; /* Met le texte en gras */
+    color: #fff; /* Couleur du texte */
+}
+
+/* Styles pour les champs de saisie */
+.form-group input {
+    width: 100%; /* Champs prennent toute la largeur */
+    padding: 12px; /* Remplissage intérieur */
+    border: 1px solid #ccc; /* Bordure légère */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 16px; /* Taille de la police */
+    transition: border-color 0.3s; /* Transition pour le changement de bordure */
+}
+
+/* Changement de couleur au focus des champs */
+.form-group input:focus {
+    border-color: #ff6347; /* Bordure verte au focus */
+    outline: none; /* Pas de contour par défaut */
+}
+
+/* Styles pour le bouton de paiement */
+button[type="submit"] {
+    width: 100%; /* Bouton prend toute la largeur */
+    padding: 12px;
+    background-color:#ff6347; /* Couleur verte */
+    color: white; /* Couleur du texte */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 18px; /* Taille de la police */
+    cursor: pointer; /* Curseur en forme de main */
+    transition: background-color 0.3s, transform 0.3s; /* Transition douce */
+}
+
+/* Changement de couleur au survol du bouton */
+button[type="submit"]:hover {
+    background-color: #45a049; /* Couleur plus foncée au survol */
+    transform: translateY(-2px); /* Légère élévation au survol */
+}
+
+/* Styles pour les messages d'erreur */
+.error-message {
+    color: red; /* Couleur rouge pour les messages d'erreur */
+    font-size: 14px; /* Taille de la police */
+    margin-top: 5px; /* Marge en haut du message */
+}
