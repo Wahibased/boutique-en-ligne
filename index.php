@@ -5,6 +5,31 @@ include 'db.php';
 // Récupérer les produits depuis la base de données
 $stmt = $pdo->query('SELECT * FROM produits');
 $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+// Vérifier si un produit est ajouté au panier
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+
+    // Ajouter le produit au panier (stocké dans la session)
+    if (!isset($_SESSION['panier'])) {
+        $_SESSION['panier'] = [];
+    }
+    $_SESSION['panier'][] = $produit;
+
+    header('Location: afficher_panier.php');
+    exit;
+}
+
+// Affichage du panier
+if (isset($_SESSION['panier']) && !empty($_SESSION['panier'])) {
+    foreach ($_SESSION['panier'] as $produit) {
+        echo "<p>" . htmlspecialchars($produit['nom']) . " - " . htmlspecialchars($produit['prix']) . " €</p>";
+    }
+} else {
+    echo "<p>Votre panier est vide.</p>";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -20,10 +45,10 @@ $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <header>
         <nav>
             <h1>Bébé <span><i class="fas fa-baby"></i></span>Calin</h1>
-            <div id="cart-icon" onclick="togglePanier()">
+            <v id="cart-icon" onclick="togglePanier()">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count">0</span>
-            </div>
+               
         </nav>
     </header>
 
@@ -43,7 +68,7 @@ $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </main>
 
-    <!-- Modale pour le panier --><div id="panier-modal" style="display: none;">
+    <div id="panier-modal" style="display: none;">
     <h3>Panier</h3>
     <div id="panier-items"></div>
     <button id="vider-panier">Vider le panier</button>
@@ -51,7 +76,28 @@ $produits = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <button onclick="document.getElementById('panier-modal').style.display='none'">Fermer</button>
 </div>
 
-  
+<footer>
+<div class="footer-section social">
+            <h3>Suivez-nous</h3>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <div class="contact">
+              <span><i class="fas fa-phone"></i> 01 23 45 67 89</span>
+                <span><i class="fas fa-envelope"></i> contact@bébé-calin.com</span>
+            </div>
+            </div>
+        </div>
+    <div style="text-align: center;">
+        <a href="admin_login.php">
+            <i class="fas fa-user-lock" style="font-size: 24px;"></i>
+             </a>
+             </div>
+             <p>&copy; 2024 Votre Boutique. Tous droits réservés.</p>
+</footer>
+
 
     <script src="script.js"></script>
 </body>

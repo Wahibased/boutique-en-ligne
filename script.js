@@ -1,4 +1,3 @@
-
 // Initialiser le panier
 let panier = [];
 
@@ -51,6 +50,7 @@ document.querySelectorAll('.ajouter-panier').forEach(button => {
         const nom = this.parentElement.querySelector('h3').textContent;
         const prix = parseFloat(this.parentElement.querySelector('p:nth-of-type(2)').textContent.replace('€', '').replace(',', '.')); // Correcte format de prix
         ajouterAuPanier(id, nom, prix);
+        togglePanier(); // Affiche le panier après ajout
     });
 });
 
@@ -62,4 +62,15 @@ document.getElementById('panier-modal').addEventListener('click', function(event
     if (event.target === this) {
         this.style.display = 'none';
     }
+
+    // Affiche ou cache le formulaire admin
+function toggleAdminForm() {
+    const adminForm = document.getElementById('admin-form');
+    if (adminForm.style.display === 'none' || adminForm.style.display === '') {
+        adminForm.style.display = 'block';
+    } else {
+        adminForm.style.display = 'none';
+    }
+}
+
 });
