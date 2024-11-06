@@ -1,6 +1,21 @@
 <?php
 // traitement_paiement.php
 session_start(); // Démarrer la session
+include 'db.php'; // Connexion à la base de données MySQL
+require 'vendor/autoload.php';
+
+// Connexion à MongoDB
+$uri = "mongodb://username:password@localhost:27017/?connectTimeoutMS=300000&retryWrites=true";
+$client = new MongoDB\Client($uri);
+$db = $client->calin_bebe;
+
+
+$collection = $db->commande;
+$avis = $collection->find()->toArray();
+
+header('Content-Type: application/json');
+echo json_encode($avis);
+
 // Vérifiez si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer les données du formulaire
@@ -13,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $expiry = htmlspecialchars(trim($_POST['expiry']));
     $cvv = htmlspecialchars(trim($_POST['cvv']));
 
-    // Validation basique des données (vous pouvez améliorer cela)
+    // Validation  des données 
     $errors = [];
     if (empty($name)) {
         $errors[] = "Le nom est requis.";
@@ -41,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
         // Si tout est valide, simuler un traitement de paiement
-        // Ici, vous pourriez intégrer une API de paiement (Stripe, PayPal, etc.)
+        // Ici, on intégrer une API de paiement (Stripe, PayPal, etc.)
         
         echo "<h2>Paiement réussi!</h2>";
         echo "<p>Merci, $name. Votre paiement a été traité avec succès.</p>";
@@ -50,8 +65,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo "Aucune donnée soumise.";
 }
+ // Enregistrer la commande dans MongoDB
+ $commande = [
+    'nom' => $name,
+    'email' => $email,
+    'adresse' => [
+        'address' => $address,
+        'city' => $city,
+        'postal_code' => $postal_code
+    ],
+    'carte' => [
+        'numero' => substr($card_number, -4), // Derniers 4 chiffres pour la sécurité
+        'expiration' => $expiry,
+        'cvv' => $cvv
+    ],
+    'produits' => $_SESSION['panier'], // Les produits du panier
+    'status' => 'en attente'
+];
+try {
+    // Assurez-vous que `$collection` est bien définie
+    $client = new MongoDB\Client("mongodb://localhost:27017");
+    $db = $client->ma_boutique;  // Nom de la base de données
+    $collection = $db->commandes; // Nom de la collection
+
+    $result = $collection->insertOne($commande);
+    if ($result->getInsertedCount() == 1) {
+        echo "<p>Commande enregistrée avec succès dans MongoDB.</p>";
+    }
+} catch (Exception $e) {
+    echo "Erreur lors de l'enregistrement dans MongoDB : " . $e->getMessage();
+}
+ // Enregistrer la commande dans MongoDB
+ $commande = [
+    'nom' => $name,
+    'email' => $email,
+    'adresse' => [
+        'address' => $address,
+        'city' => $city,
+        'postal_code' => $postal_code
+    ],
+    'carte' => [
+        'numero' => substr($card_number, -4), // Derniers 4 chiffres pour la sécurité
+        'expiration' => $expiry,
+        'cvv' => $cvv
+    ],
+    'produits' => $_SESSION['panier'], // Les produits du panier
+    'status' => 'en attente'
+];
+try {
+    $result = $collection->insertOne($commande);
+    if ($result->getInsertedCount() == 1) {
+        echo "<p>Commande enregistrée avec succès dans MongoDB.</p>";
+    }
+} catch (Exception $e) {
+    echo "Erreur lors de l'enregistrement dans MongoDB : " . $e->getMessage();
+}
 // connexion à la base de données
-include 'db.php'; // Assurez-vous que db.php se connecte correctement
+include 'db.php'; 
 
 // Si tout est valide et que le paiement est simulé
 try {

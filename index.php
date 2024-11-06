@@ -76,6 +76,37 @@ if (isset($_SESSION['panier']) && !empty($_SESSION['panier'])) {
     <button onclick="document.getElementById('panier-modal').style.display='none'">Fermer</button>
 </div>
 
+<div class="avis-section">
+    <h3>Avis des clients</h3>
+    
+    <!-- Diaporama des avis -->
+    <div id="avis-diaporama">
+        <!-- Les avis seront injectés ici par JavaScript -->
+    </div>
+    <div style="text-align: center;">
+        <a href="add_reviews.php">
+        <button onclick="afficherFormulaire()">Laisser un avis</button>
+             </a>
+             </div>
+    <!-- Bouton pour afficher le formulaire d'avis 
+    <button onclick="afficherFormulaire()">Laisser un avis</button>-->
+    <!-- Formulaire d'avis, caché par défaut -->
+<form id="avis-form" action="add_review.php" method="POST" style="display: none;">
+        <input type="text" name="nom" placeholder="Votre nom" required>
+        <textarea name="commentaire" placeholder="Votre commentaire" required></textarea>
+        <select name="note" required>
+            <option value="">Note</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <button type="submit">Envoyer</button>
+    </form>
+</div>
+  
+
 <footer>
 <div class="footer-section social">
             <h3>Suivez-nous</h3>
@@ -97,9 +128,6 @@ if (isset($_SESSION['panier']) && !empty($_SESSION['panier'])) {
              </div>
              <p>&copy; 2024 Votre Boutique. Tous droits réservés.</p>
 </footer>
-
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
-
